@@ -36,8 +36,8 @@ if (require.main === module) { // node index.js
 		throw "Requirements: node-schedule, This module is not needed as an imported module.";
 	}
 	let rule = new schedule.RecurrenceRule();
-	rule.hour = config.time.hour;
-	rule.minute = config.time.minute;
+	rule.hour = config.gc().time.hour;
+	rule.minute = config.gc().time.minute;
 	let job = schedule.scheduleJob(rule, function () {
 		post_data().then(function () {
 			console.info("Successfully posted data.")
