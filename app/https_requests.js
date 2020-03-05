@@ -54,14 +54,11 @@ function post(url, postData) {
 				data = Buffer.concat([data, d]);
 			})
 			res.on('end', function () {
-				console.log("Pushed")
 				resolve(data);
 			})
 		}).on('error', function (error) {
-			console.error("Error when pushing", error)
 			reject({descriptor: "internet", error: error});
 		})
-		console.log(postData);
 		req.write(postData);
 		req.end();
 	});
