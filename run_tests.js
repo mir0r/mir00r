@@ -43,7 +43,7 @@ try {
 
 console.log(`\nPassed ${valids.passed}/${valids.total} tests.`)
 if (valids.fatal > 0) {
-	console.error(`${valids.fatal} fatal error !`)
-	return 1;
+	throw(`${valids.fatal} fatal error !`);
 }
+
 return 0;

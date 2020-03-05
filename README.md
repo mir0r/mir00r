@@ -27,7 +27,8 @@ tracker.post_data().then(function(){
     "https://discordapp.com/api/webhooks/"
   ],
   "suffix": "cases",
-  "country": "France", //Country as written in CSSEGIS daily reports files.
+  "country": "France",
+  "_country_comment": "//Country as written in CSSEGIS daily reports files.",
   "time": {
     "hour": 1,
     "minute": 31
