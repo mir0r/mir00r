@@ -41,35 +41,9 @@ try {
 	valids.fatal++;
 }
 
-if (valids.fatal === 0) {
-//Execute the whole.
-	try {
-		let a = require("./index.js");
-		a.post_data(true).then(function (res) {
-			console.log("[+] No error on running index.js")
-			//console.info(res)
-			valids.total++;
-			valids.passed++;
-			showEnd();
-		}).catch(function (err) {
-			console.error("[-] Error on running index.js", err)
-			valids.total++;
-			valids.fatal++;
-			showEnd();
-		})
-	} catch (e) {
-		console.error("[-] Error on running index.js", e)
-		valids.total++;
-		valids.fatal++;
-		showEnd();
-	}
+console.log(`\nPassed ${valids.passed}/${valids.total} tests.`)
+if (valids.fatal > 0) {
+	throw(`${valids.fatal} fatal error !`);
 }
 
-function showEnd() {
-	console.log(`\nPassed ${valids.passed}/${valids.total} tests.`)
-	if (valids.fatal > 0) {
-		throw(`${valids.fatal} fatal error !`);
-	}
-
-	return 0;
-}
+return 0;
