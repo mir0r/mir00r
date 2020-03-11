@@ -30,25 +30,74 @@ function embed_news(data, previous_data) {
 	let embed = JSON.parse(JSON.stringify(config.gc().template)); //Used to "deep copy" the table.
 
 	let nCov_data = {
-		latest: {world: 0},
-		yesterday: {world: 0},
+		latest: {world: {Confirmed: 0, Deaths: 0, Recovered: 0}},
+		yesterday: {world: {Confirmed: 0, Deaths: 0, Recovered: 0}},
 	};
 
 	nCov_data["latest"] = populate(nCov_data["latest"], data);
 	nCov_data["yesterday"] = populate(nCov_data["yesterday"], previous_data);
-	embed.embeds[0]["fields"][0].value = nCov_data["latest"][config.gc().country]["Confirmed"] + " " + config.gc().suffix;
-	embed.embeds[0]["fields"][1].value = nCov_data["latest"]["world"] + " " + config.gc().suffix;
-	let stats = {
-		new_country: parseInt(nCov_data["latest"][config.gc().country]["Confirmed"]) - parseInt(nCov_data["yesterday"][config.gc().country]["Confirmed"]),
-		new_world: parseInt(nCov_data["latest"]["world"]) - parseInt(nCov_data["yesterday"]["world"]),
-	}
-	stats["percent_country"] = (stats.new_country / nCov_data["yesterday"][config.gc().country]["Confirmed"]) * 100
-	stats["percent_world"] = (stats.new_world / nCov_data["yesterday"]["world"]) * 100
 
-	embed.embeds[0]["fields"][2].value = `+${stats.new_country} ${config.gc().suffix} (+${Math.floor(stats["percent_country"])}%)`;
-	embed.embeds[0]["fields"][3].value = `+${stats.new_world} ${config.gc().suffix} (+${Math.floor(stats["percent_world"])}%)`;
+	return create_fields(config.gc().Calculation, nCov_data, embed);
+}
+
+function create_fields(method, nCov_data, embed) {
+	let today_existing;
+	let yesterday_existing;
+	switch (method) {
+		case "Existing":
+			today_existing = {
+				country: (parseInt(nCov_data["latest"][config.gc().country]["Confirmed"])
+					- parseInt(nCov_data["latest"][config.gc().country]["Deaths"])
+					- parseInt(nCov_data["latest"][config.gc().country]["Recovered"])),
+				world: (parseInt(nCov_data["latest"]["world"]["Confirmed"])
+					- parseInt(nCov_data["latest"]["world"]["Deaths"])
+					- parseInt(nCov_data["latest"]["world"]["Recovered"]))
+			}
+			yesterday_existing = { //TODO: fix copy pasting.
+				country: (parseInt(nCov_data["yesterday"][config.gc().country]["Confirmed"])
+					- parseInt(nCov_data["yesterday"][config.gc().country]["Deaths"])
+					- parseInt(nCov_data["yesterday"][config.gc().country]["Recovered"])),
+				world: (parseInt(nCov_data["yesterday"]["world"]["Confirmed"])
+					- parseInt(nCov_data["yesterday"]["world"]["Deaths"])
+					- parseInt(nCov_data["yesterday"]["world"]["Recovered"]))
+			}
+			break;
+		case "Confirmed":
+			today_existing = {
+				country: (parseInt(nCov_data["latest"][config.gc().country]["Confirmed"])),
+				world: (parseInt(nCov_data["latest"]["world"]["Confirmed"]))
+			}
+			yesterday_existing = { //TODO: fix copy pasting.
+				country: (parseInt(nCov_data["yesterday"][config.gc().country]["Confirmed"])),
+				world: (parseInt(nCov_data["yesterday"]["word"]["Confirmed"]))
+			}
+			break;
+		default:
+			throw "This method of calculation isn't supported."
+	}
+
+	embed.embeds[0]["fields"][0].value = today_existing.country + " " + config.gc().suffix; //Country total
+	embed.embeds[0]["fields"][1].value = today_existing.world + " " + config.gc().suffix; // World Total
+
+	let stats = {
+		new_country: today_existing.country - yesterday_existing.country,
+		new_world: today_existing.world - yesterday_existing.world
+	}
+
+	stats["percent_country"] = Math.floor((stats.new_country / yesterday_existing.country) * 100) // Country Percent
+	stats["percent_world"] = Math.floor((stats.new_world / yesterday_existing.world) * 100) // World Percent
+	console.log(stats.percent_world)
+	console.log(stats.percent_country)
+
+	stats["symbol_country"] = stats.percent_country < 0 ? "" : "+"
+	stats["symbol_world"] = stats.percent_world < 0 ? "" : "+"
+
+	embed.embeds[0]["fields"][2].value = `${stats.symbol_country}${stats.new_country} ${config.gc().suffix} (${stats.symbol_country}${stats.percent_country}%)`;
+	embed.embeds[0]["fields"][3].value = `${stats.symbol_world}${stats.new_world} ${config.gc().suffix} (${stats.symbol_world}${stats.percent_world}%)`;
+	embed.embeds[0]["fields"][4].value = Object.keys(nCov_data.latest).length;
 	return embed;
 }
+
 
 /**
  * @param {object} _nCov_data
@@ -67,8 +116,10 @@ function populate(_nCov_data, data) {
 		} else {
 			nCov_data[data[i]["Country/Region"]] = data[i];
 		}
-		if (!isNaN(parseInt(data[i]["Confirmed"]))) {
-			nCov_data.world += parseInt(data[i]["Confirmed"]);
+		for (let i2 = 0; i2 < to_copy.length; i2++) {
+			if (!isNaN(parseInt(data[i][to_copy[i2]]))) {
+				nCov_data.world[to_copy[i2]] += parseInt(data[i][to_copy[i2]]);
+			}
 		}
 	}
 	return nCov_data;

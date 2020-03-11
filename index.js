@@ -13,14 +13,17 @@ let config = require("./app/config.js");
  * Automatically finds and posts information to provided Webhooks.
  * @return {Promise}
  */
-async function post_data() {
+async function post_data(do_a_test = false) {
 	return new Promise(function (resolve, reject) {
 		data.create_latest_embed().then(function (latest_embed) {
-			embed.post_embeds(latest_embed).then(function (res) {
-				resolve(true);
-			}).catch(function (err) {
-				reject(err)
-			})
+			if (!do_a_test) {
+				embed.post_embeds(latest_embed).then(function (res) {
+					resolve(true);
+				}).catch(function (err) {
+					reject(err)
+				})
+			}
+			resolve(latest_embed);
 		}).catch(function (err) {
 			reject(err);
 		})

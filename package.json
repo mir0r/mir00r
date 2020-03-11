@@ -1,18 +1,20 @@
 {
   "name": "covid-19-tracker",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.1.0",
+  "description": "Discord webhook lib to track the advance of new the new virus.",
   "main": "index.js",
   "scripts": {
-    "test": "node run_tests.js"
+	"test": "node run_tests.js"
   },
   "keywords": [
-    "covid-19",
-    "Webhook"
+	"covid-19",
+	"Webhook",
+	"discord"
   ],
-  "author": "wow",
-  "license": "MIT",
+  "author": "wow <github@wowow.cloud>",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "homepage": "https://github.com/wow0000/covid-19-tracker/",
   "optionalDependencies": {
-    "node-schedule": "^1.3.2"
+	"node-schedule": "^1.3.2"
   }
 }

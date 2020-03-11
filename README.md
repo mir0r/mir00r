@@ -1,5 +1,8 @@
 # covid-19-tracker for Discord and Webhooks
 
+![npm](https://img.shields.io/npm/v/covid-19-tracker)
+![Node.js CI](https://github.com/wow0000/covid-19-tracker/workflows/Node.js%20CI/badge.svg?branch=master)
+
 #### Note: This is a personal project and should not be relied upon.
 
 This can be imported and also used as a standalone program. It uses a config file stored at /config.json. If needed
