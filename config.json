@@ -1,46 +1,51 @@
 {
   "base_url": "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/",
   "webhooks": [
-    "https://discordapp.com/api/webhooks/"
+	"https://discordapp.com/api/webhooks/"
   ],
   "suffix": "cases",
   "country": "France",
+  "Calculation": "Existing",
   "time": {
-    "hour": 1,
-    "minute": 31
+	"hour": 1,
+	"minute": 31
   },
   "template": {
-    "embeds": [
-      {
-        "title": "Informations",
-        "description": "The latest news from the Covid-2019",
-        "color": 4176176,
-        "footer": {
-          "text": "Bot"
-        },
-        "fields": [
-          {
-            "name": "France",
-            "value": "",
-            "inline": true
-          },
-          {
-            "name": "World",
-            "value": "",
-            "inline": true
-          },
-          {
-            "name": "France compared to yesterday",
-            "value": "",
-            "inline": true
-          },
-          {
-            "name": "World compared to yesterday",
-            "value": "",
-            "inline": true
-          }
-        ]
-      }
-    ]
+	"embeds": [
+	  {
+		"title": "Informations",
+		"description": "The latest news from the Covid-2019",
+		"color": 4176176,
+		"footer": {
+		  "text": "Bot"
+		},
+		"fields": [
+		  {
+			"name": "France",
+			"value": "",
+			"inline": true
+		  },
+		  {
+			"name": "World",
+			"value": "",
+			"inline": true
+		  },
+		  {
+			"name": "France compared to yesterday",
+			"value": "",
+			"inline": true
+		  },
+		  {
+			"name": "World compared to yesterday",
+			"value": "",
+			"inline": true
+		  },
+		  {
+			"name": "Total infected country",
+			"value": ""
+		  }
+		]
+	  }
+	]
   }
 }
