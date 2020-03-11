@@ -32,6 +32,7 @@ tracker.post_data().then(function(){
   "suffix": "cases",
   "country": "France",
   "_country_comment": "//Country as written in CSSEGIS daily reports files.",
+  "Calculation": "Existing",
   "time": {
     "hour": 1,
     "minute": 31
