@@ -4,7 +4,7 @@
 	"https://discordapp.com/api/webhooks/"
   ],
   "suffix": "cases",
-  "country": "France",
+  "country": "Uzbekistan",
   "Calculation": "Existing",
   "time": {
 	"hour": 1,
@@ -21,7 +21,7 @@
 		},
 		"fields": [
 		  {
-			"name": "France",
+			"name": "Uzbekistan",
 			"value": "",
 			"inline": true
 		  },
@@ -31,7 +31,7 @@
 			"inline": true
 		  },
 		  {
-			"name": "France compared to yesterday",
+			"name": "Uzbekistan compared to yesterday",
 			"value": "",
 			"inline": true
 		  },
